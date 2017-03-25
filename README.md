@@ -14,7 +14,7 @@ Build:
 
 Run the game:
 
-   bin/poker
+    bin/poker
 
 ## Problem
 
@@ -80,6 +80,7 @@ Examples: Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH Output: White wins 
 TBD
 
 Rank
+
     9 - straight flush + highest card
     8 - four of a kind + card value
     7 - full house + 3 card value
@@ -91,7 +92,9 @@ Rank
     1 - high card + highest cards
 
 Rank Code
-[ rank code, sorted faces ]
+
+    [ rank code, sorted faces ]
+
 e.g.
 
 * 1, 0504030201
