@@ -44,6 +44,19 @@ defmodule Poker do
     Enum.random([hand1, hand2])
   end
 
+  # Four of the same face value
+  #
+  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
+  # Output: true if straight and false othesize
+  def four_of_a_kind(cards) do
+    Enum.member?( Map.values(four_of_a_kind(cards, %{})), 4)
+  end
+
+  defp four_of_a_kind([], faces), do: faces
+  defp four_of_a_kind([{face, _}|remaining], faces) do
+    four_of_a_kind(remaining, Map.update(faces, face, 1, &(&1 + 1)) )
+  end
+
   # Compare card with next card
   # No tail recursing
   #
