@@ -44,17 +44,20 @@ defmodule Poker do
     Enum.random([hand1, hand2])
   end
 
+  # Three of the same face value
+  #
+  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
+  # Output: true if straight and false othesize
+  def three_of_a_kind(cards) do
+    Enum.member?( Map.values(count_faces(cards)), 3 )
+  end
+
   # Four of the same face value
   #
   # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
   # Output: true if straight and false othesize
   def four_of_a_kind(cards) do
-    Enum.member?( Map.values(four_of_a_kind(cards, %{})), 4)
-  end
-
-  defp four_of_a_kind([], faces), do: faces
-  defp four_of_a_kind([{face, _}|remaining], faces) do
-    four_of_a_kind(remaining, Map.update(faces, face, 1, &(&1 + 1)) )
+    Enum.member?( Map.values(count_faces(cards)), 4 )
   end
 
   # Compare card with next card
@@ -78,27 +81,39 @@ defmodule Poker do
     end
   end
 
+  # Subtract face values of cards
   defp subtract({face1,_}, {face2,_}) do
     face2 - face1
   end
 
-  # Are all the suites the same
+  # Are all the suits the same
   #
   # Input: [{2, :H},{3, :H},{4, :H},{8, :H}, {10, :H}]
   # Output: true if flush and false otherwise
   def flush(cards) do
-    flush(cards, %{})
+    count_suits(cards)
     |> Map.size == 1
-  end
-
-  defp flush([], suites), do: suites
-  defp flush([{_, suit}|remaining], suites) do
-    flush(remaining, Map.put(suites, suit, true) )
   end
 
   # Both a straight and a flush
   def straight_flush(cards) do
     straight(cards) && flush(cards)
+  end
+
+  # Count faces
+  defp count_faces(cards) do
+    count_cards(cards, &(elem(&1,0) ), %{})
+  end
+
+  # Count faces
+  defp count_suits(cards) do
+    count_cards(cards, &(elem(&1,1) ), %{})
+  end
+
+  # Count repeating parts of a card, either face of the suit.
+  defp count_cards([], _, faces), do: faces
+  defp count_cards([card|remaining], card_part, faces) do
+    count_cards(remaining, card_part, Map.update(faces, card_part.(card), 1, &(&1 + 1)) )
   end
 
   defp report(hand, true),  do: IO.puts "#{inspect(hand)},  WINNER"

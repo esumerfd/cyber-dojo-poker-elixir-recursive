@@ -10,6 +10,14 @@ defmodule PokerTest do
     assert hand1 == winner || hand2 == winner
   end
 
+  test "three of a kind" do
+    assert Poker.three_of_a_kind([{2, :H},{2, :D}, {2, :C}, {6, :S}, {6, :H}])
+    assert Poker.three_of_a_kind([{2, :H},{6, :D}, {2, :C}, {2, :S}, {6, :H}])
+
+    assert !Poker.four_of_a_kind([{4, :H},{2, :D}, {2, :C}, {3, :S}, {6, :H}])
+    assert !Poker.four_of_a_kind([{4, :H},{4, :D}, {3, :C}, {2, :S}, {2, :H}])
+  end
+
   test "four of a kind" do
     assert Poker.four_of_a_kind([{2, :H},{2, :D}, {2, :C}, {2, :S}, {6, :H}])
 
