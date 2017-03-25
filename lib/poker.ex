@@ -83,6 +83,11 @@ defmodule Poker do
     flush(remaining, Map.put(suites, suit, true) )
   end
 
+  # Both a straight and a flush
+  def straight_flush(cards) do
+    straight(cards) && flush(cards)
+  end
+
   defp report(hand, true),  do: IO.puts "#{inspect(hand)},  WINNER"
   defp report(hand, false), do: IO.puts "#{inspect(hand)}"
 end
