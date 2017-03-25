@@ -20,27 +20,53 @@ defmodule Poker do
     { hand1, hand2, winner(hand1, hand2) }
   end
 
-  defp take_hand({cards, _, hand2}, 1) do
-    {cards, hand} = take_hand(cards)
-    {cards, hand, hand2} 
-  end
-
-  defp take_hand({cards, hand1, _}, 2) do
-    {cards, hand} = take_hand(cards)
-    {cards, hand1, hand} 
-  end
-
-  defp take_hand(cards) do
-    { Enum.drop(cards, 5), Enum.take(cards, 5) }
+  defp take_hand({cards, hand1, hand2}, player) do
+    {cards, new_hand} = { Enum.drop(cards, 5), Enum.take(cards, 5) }
+    case player do
+      1 -> {cards, new_hand, hand2} 
+      2 -> {cards, hand1, new_hand} 
+    end
   end
 
   defp cards() do
-    cards = for face <- [ 2,3,4,5,6,7,8,9,10,11,12,13 ], suit <- [ :H, :D, :C, :S ], do: {face, suit}
-    {cards, nil, nil}
+    {
+      (
+        Enum.shuffle(
+          for face <- [2,3,4,5,6,7,8,9,10,11,12,13,14], suit <- [:H,:D,:C,:S], do: {face, suit}
+        )
+      ),
+      {},
+      {}
+    }
   end
 
   defp winner(hand1, hand2) do
     Enum.random([hand1, hand2])
+  end
+
+  # Compare card with next card
+  # No tail recursing
+  #
+  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
+  # Output: true if straight and false othesize
+  def straight(cards) do
+    match?(
+      [_, [1,1,1,1]],
+      Enum.sort(cards, fn({ face1,_ },{ face2,_ }) -> face1 < face2 end)|> straight([])
+    )
+  end
+
+  def straight([card|remaining], differences) do
+    case remaining do
+      [] -> [card, differences]
+      _  -> 
+        [next_card,differences] = straight(remaining,differences)
+        [card, differences ++ [subtract(card,next_card)]]
+    end
+  end
+
+  defp subtract({face1,_}, {face2,_}) do
+    face2 - face1
   end
 
   defp report(hand, true),  do: IO.puts "#{inspect(hand)},  WINNER"
