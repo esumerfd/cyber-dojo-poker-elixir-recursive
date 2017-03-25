@@ -66,42 +66,44 @@ Your job is to rank pairs of poker hands and to indicate which, if either, has a
 
 Examples: Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH Output: White wins - high card: Ace
 
-  Input: Black: 2H 4S 4C 2D 4H White: 2S 8S AS QS 3S Output: Black wins - full house
-  Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C KH Output: Black wins - high card: 9
-  Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
+    Input: Black: 2H 4S 4C 2D 4H White: 2S 8S AS QS 3S Output: Black wins - full house
+    Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C KH Output: Black wins - high card: 9
+    Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
 
 # Example output:
 
-  TH 5H KC TS TC WINNER
-  4H 2S 2H AS KH
+    TH 5H KC TS TC WINNER
+    4H 2S 2H AS KH
 
 # Design
 
 TBD
 
 Rank
-9 - straight flush + highest card
-8 - four of a kind + card value
-7 - full house + 3 card value
-6 - flush + highest cards
-5 - straight (can be ace high) + highest card
-4 - three of a kind + 3 card value
-3 - two pair + highest pairs + remaining card
-2 - pair + 2 card value + highest cards
-1 - high card + highest cards
+    9 - straight flush + highest card
+    8 - four of a kind + card value
+    7 - full house + 3 card value
+    6 - flush + highest cards
+    5 - straight (can be ace high) + highest card
+    4 - three of a kind + 3 card value
+    3 - two pair + highest pairs + remaining card
+    2 - pair + 2 card value + highest cards
+    1 - high card + highest cards
 
 Rank Code
 [ rank code, sorted faces ]
 e.g.
-- 1, 0504030201
-- 1, 0605040302 WINNER
-- 4, 0404040201
-- 4, 0505050201 WINNER
+
+* 1, 0504030201
+* 1, 0605040302 WINNER
+* 4, 0404040201
+* 4, 0505050201 WINNER
 
 ## Flow
-Initialize the deck
-Deal the random hands
-Generate the rank
-Sort the ranks
-Print the output
+
+* Initialize the deck
+* Deal the random hands
+* Generate the rank
+* Sort the ranks
+* Print the output
 
