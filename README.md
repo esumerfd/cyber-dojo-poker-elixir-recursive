@@ -71,8 +71,9 @@ Examples: Input: Black: 2H 3D 5S 9C KD White: 2C 3H 4S 8C AH Output: White wins 
   Input: Black: 2H 3D 5S 9C KD White: 2D 3H 5C 9S KH Output: Tie
 
 # Example output:
-TH 5H KC TS TC WINNER
-4H 2S 2H AS KH
+
+  TH 5H KC TS TC WINNER
+  4H 2S 2H AS KH
 
 # Design
 
