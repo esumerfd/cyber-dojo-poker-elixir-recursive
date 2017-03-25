@@ -40,10 +40,7 @@ defmodule Poker do
   end
 
   defp winner(hand1, hand2) do
-    case :rand.uniform(2) do
-      1 -> hand1
-      2 -> hand2
-    end
+    Enum.random([hand1, hand2])
   end
 
   defp report(hand, true),  do: IO.puts "#{inspect(hand)},  WINNER"
