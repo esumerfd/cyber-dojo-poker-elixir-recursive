@@ -1,6 +1,8 @@
 # Poker in Elixir using only Recursion
 
-A solution to the Poker Hands problem from cyber-dojo.org in Elixir
+A solution to the Poker Hands problem from cyber-dojo.org in Elixir.
+
+This iteration will bias the alorithms to recursion over iteration to see how it turns out.
 
 # Usage
 
