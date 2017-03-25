@@ -69,6 +69,20 @@ defmodule Poker do
     face2 - face1
   end
 
+  # Are all the suites the same
+  #
+  # Input: [{2, :H},{3, :H},{4, :H},{8, :H}, {10, :H}]
+  # Output: true if flush and false otherwise
+  def flush(cards) do
+    flush(cards, %{})
+    |> Map.size == 1
+  end
+
+  defp flush([], suites), do: suites
+  defp flush([{_, suit}|remaining], suites) do
+    flush(remaining, Map.put(suites, suit, true) )
+  end
+
   defp report(hand, true),  do: IO.puts "#{inspect(hand)},  WINNER"
   defp report(hand, false), do: IO.puts "#{inspect(hand)}"
 end

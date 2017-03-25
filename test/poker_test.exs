@@ -16,5 +16,11 @@ defmodule PokerTest do
 
     assert !Poker.straight([{3, :D}, {4, :C}, {5, :S}, {6, :H},{9, :H}])
   end
+
+  test "flush" do
+    assert Poker.flush( [{2, :H},{3, :H},{4, :H},{8, :H}, {10, :H}])
+
+    assert !Poker.flush([{2, :C},{3, :H},{4, :H},{8, :H}, {10, :H}])
+  end
 end
 
