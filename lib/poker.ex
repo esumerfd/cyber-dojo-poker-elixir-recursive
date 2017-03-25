@@ -49,7 +49,9 @@ defmodule Poker do
   # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
   # Output: true if straight and false othesize
   def three_of_a_kind(cards) do
-    Enum.member?( Map.values(count_faces(cards)), 3 )
+    count_faces(cards)
+    |> Map.values
+    |> Enum.member?(3)
   end
 
   # Four of the same face value
@@ -57,7 +59,9 @@ defmodule Poker do
   # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
   # Output: true if straight and false othesize
   def four_of_a_kind(cards) do
-    Enum.member?( Map.values(count_faces(cards)), 4 )
+    count_faces(cards)
+    |> Map.values
+    |> Enum.member?(4)
   end
 
   # Compare card with next card
