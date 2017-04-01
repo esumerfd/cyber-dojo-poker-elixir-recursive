@@ -12,7 +12,8 @@ defmodule PokerTest do
 
   test "winner" do
     Enum.each([
-        { [{2, :H},{2, :D}, {8, :C}, {8, :S}, {6, :H}], [{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}] }
+        { [{2, :H},{2, :D}, {8, :C}, {8, :S}, {6, :H}], [{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}] },
+        { [{2, :H},{2, :D}, {8, :C}, {8, :S}, {8, :H}], [{2, :H},{2, :D}, {2, :C}, {3, :S}, {3, :H}] }
       ],
       fn({hand1,hand2}) -> 
         assert hand1 == Poker.winner(hand1, hand2)
