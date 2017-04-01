@@ -47,7 +47,6 @@ defmodule Poker do
   # pair
   def pair(cards) do
     count_faces(cards)
-    |> Map.values
     |> Enum.filter(&(&1 == 2))
     |> length == 1
   end
@@ -55,7 +54,6 @@ defmodule Poker do
   # Two pair
   def two_pair(cards) do
     count_faces(cards)
-    |> Map.values
     |> Enum.filter(&(&1 == 2))
     |> length == 2
   end
@@ -66,14 +64,12 @@ defmodule Poker do
   # Output: true if straight and false othesize
   def three_of_a_kind(cards) do
     count_faces(cards)
-    |> Map.values
     |> Enum.member?(3)
   end
 
   # Full house
   def full_house(cards) do
     count_faces(cards)
-    |> Map.values
     |> fn(values) -> 
          Enum.member?(values, 3) && Enum.member?(values, 2) 
        end.()
@@ -85,7 +81,6 @@ defmodule Poker do
   # Output: true if straight and false othesize
   def four_of_a_kind(cards) do
     count_faces(cards)
-    |> Map.values
     |> Enum.member?(4)
   end
 
@@ -121,7 +116,7 @@ defmodule Poker do
   # Input: [{2, :H},{3, :H},{4, :H},{8, :H}, {10, :H}]
   # Output: true if flush and false otherwise
   def flush(cards) do
-    count_suits(cards)
+    count_cards(cards, &(elem(&1,1) ), %{})
     |> Map.size == 1
   end
 
@@ -133,11 +128,7 @@ defmodule Poker do
   # Count faces
   defp count_faces(cards) do
     count_cards(cards, &(elem(&1,0) ), %{})
-  end
-
-  # Count faces
-  defp count_suits(cards) do
-    count_cards(cards, &(elem(&1,1) ), %{})
+    |> Map.values
   end
 
   # Count repeating parts of a card, either face of the suit.
