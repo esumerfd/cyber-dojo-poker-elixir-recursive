@@ -10,6 +10,13 @@ defmodule PokerTest do
     assert hand1 == winner || hand2 == winner
   end
 
+  test "winner" do
+    hand1 = [{2, :H},{2, :D}, {8, :C}, {8, :S}, {6, :H}]
+    hand2 = [{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}]
+
+    assert hand1 == Poker.winner(hand1, hand2)
+  end
+
   test "pair" do
     assert Poker.pair([{2, :H},{2, :D}, {5, :C}, {8, :S}, {6, :H}])
     assert Poker.pair([{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}])

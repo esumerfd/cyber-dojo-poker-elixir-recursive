@@ -40,8 +40,38 @@ defmodule Poker do
     }
   end
 
-  defp winner(hand1, hand2) do
-    Enum.random([hand1, hand2])
+  def winner(hand1, hand2) do
+    rank1 = rank(hand1)
+    rank2 = rank(hand2)
+
+    case([rank1 > rank2, rank1 < rank2]) do
+      [true, false] -> hand1
+      [false, true] -> hand2
+      _             -> nil
+    end
+  end
+
+  #  9 - straight flush + highest card
+  #  8 - four of a kind + card value
+  #  7 - full house + 3 card value
+  #  6 - flush + highest cards
+  #  5 - straight (can be ace high) + highest card
+  #  4 - three of a kind + 3 card value
+  #  3 - two pair + highest pairs + remaining card
+  #  2 - pair + 2 card value + highest cards
+  #  1 - high card + highest cards
+  defp rank(cards) do
+    [ 
+      straight_flush(cards),
+      four_of_a_kind(cards),
+      full_house(cards),
+      flush(cards),
+      straight(cards),
+      three_of_a_kind(cards),
+      two_pair(cards),
+      pair(cards),
+      true
+    ]
   end
 
   # pair
