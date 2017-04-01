@@ -62,16 +62,22 @@ defmodule Poker do
   #  1 - high card + highest cards
   defp rank(cards) do
     cond do
-      straight_flush(cards)  -> 9
-      four_of_a_kind(cards)  -> 8
-      full_house(cards)      -> 7
-      flush(cards)           -> 6
-      straight(cards)        -> 5
-      three_of_a_kind(cards) -> 4
-      two_pair(cards)        -> 3
+      straight_flush(cards)  -> rank_straight_flush(cards)
+      four_of_a_kind(cards)  -> rank_four_of_a_kind(cards)
+      full_house(cards)      -> rank_full_house(cards)
+      flush(cards)           -> rank_flush(cards)
+      straight(cards)        -> rank_straight(cards)
+      three_of_a_kind(cards) -> rank_three_of_a_kind(cards)
+      two_pair(cards)        -> rank_two_pair(cards)
       pair(cards)            -> rank_pair(cards)
-      true                   -> 1
+      true                   -> rank_high_card(cards)
     end
+  end
+
+  def rank_high_card(cards) do
+    high_card = Enum.max_by(cards, fn({face,_}) -> face end)
+
+    [1, elem(high_card,0)]
   end
 
   def rank_pair(cards) do

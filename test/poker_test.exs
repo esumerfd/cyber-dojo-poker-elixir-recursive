@@ -10,12 +10,18 @@ defmodule PokerTest do
     assert hand1 == winner || hand2 == winner || false == winner
   end
 
-  #test "winner" do
-    #hand1 = [{2, :H},{2, :D}, {8, :C}, {8, :S}, {6, :H}]
-    #hand2 = [{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}]
+  test "winner" do
+    Enum.each([
+        { [{2, :H},{2, :D}, {8, :C}, {8, :S}, {6, :H}], [{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}] }
+      ],
+      fn({hand1,hand2}) -> 
+        assert hand1 == Poker.winner(hand1, hand2)
+      end)
+  end
 
-    #assert hand1 == Poker.winner(hand1, hand2)
-  #end
+  test "rank high card" do
+    assert [1,13] == Poker.rank_high_card [{2,:H},{8,:D},{3,:H},{7,:H},{13,:H}]
+  end
 
   test "rank pair" do
     assert [2,2,13] == Poker.rank_pair [{2,:H},{2,:D},{3,:H},{7,:H},{13,:H}]
