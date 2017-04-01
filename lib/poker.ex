@@ -127,6 +127,14 @@ defmodule Poker do
     [7, elem(high_card,0)]
   end
 
+  def rank_four_of_a_kind(cards) do
+    high_card = count_cards(cards, &(elem(&1,0) ), %{})
+    |> Enum.filter(fn({_, count}) -> count == 4 end)
+    |> List.first
+
+    [8, elem(high_card,0)]
+  end
+
   # pair
   def pair(cards) do
     count_faces(cards)
