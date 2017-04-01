@@ -135,6 +135,12 @@ defmodule Poker do
     [8, elem(high_card,0)]
   end
 
+  def rank_straight_flush(cards) do
+    high_card = Enum.max_by(cards, fn({face,_}) -> face end)
+
+    [9, elem(high_card,0)]
+  end
+
   # pair
   def pair(cards) do
     count_faces(cards)
