@@ -38,6 +38,10 @@ defmodule PokerTest do
     assert [5,6] == Poker.rank_straight([{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}])
   end
 
+  test "rank flush" do
+    assert [6,10] == Poker.rank_flush( [{2, :H},{3, :H},{4, :H},{8, :H}, {10, :H}])
+  end
+
   test "pair" do
     assert Poker.pair([{2, :H},{2, :D}, {5, :C}, {8, :S}, {6, :H}])
     assert Poker.pair([{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}])

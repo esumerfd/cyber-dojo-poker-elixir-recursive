@@ -108,11 +108,15 @@ defmodule Poker do
   end
 
   def rank_straight(cards) do
-    high_card = cards
-    |> Enum.sort(fn({face1,_},{face2,_}) -> face1 > face2 end)
-    |> List.first
+    high_card = Enum.max_by(cards, fn({face,_}) -> face end)
 
     [5, elem(high_card,0)]
+  end
+
+  def rank_flush(cards) do
+    high_card = Enum.max_by(cards, fn({face,_}) -> face end)
+
+    [6, elem(high_card,0)]
   end
 
   def rank_full_house(cards) do
