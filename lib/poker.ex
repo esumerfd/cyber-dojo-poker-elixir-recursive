@@ -69,9 +69,34 @@ defmodule Poker do
       straight(cards)        -> 5
       three_of_a_kind(cards) -> 4
       two_pair(cards)        -> 3
-      pair(cards)            -> 2
+      pair(cards)            -> rank_pair(cards)
       true                   -> 1
     end
+  end
+
+  def rank_pair(cards) do
+    pair = count_cards(cards, &(elem(&1,0) ), %{})
+    |> Enum.filter(fn({_, count}) -> count == 2 end)
+    |> List.first
+
+    high_card = Enum.max_by(cards, fn({face,_}) -> face end)
+
+    [2, elem(pair,0), elem(high_card,0)]
+  end
+
+  def rank_two_pair(cards) do
+    counts = count_cards(cards, &(elem(&1,0) ), %{})
+
+    pair = counts
+    |> Enum.filter(fn({_, count}) -> count == 2 end)
+    |> Enum.sort(fn({face1,_},{face2,_}) -> face1 > face2 end)
+    |> List.first
+
+    high_card = counts
+    |> Enum.filter(fn({_, count}) -> count != 2 end)
+    |> List.first
+
+    [3, elem(pair,0), elem(high_card,0)]
   end
 
   # pair
@@ -89,9 +114,6 @@ defmodule Poker do
   end
 
   # Three of the same face value
-  #
-  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
-  # Output: true if straight and false othesize
   def three_of_a_kind(cards) do
     count_faces(cards)
     |> Enum.member?(3)
@@ -106,9 +128,6 @@ defmodule Poker do
   end
 
   # Four of the same face value
-  #
-  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
-  # Output: true if straight and false othesize
   def four_of_a_kind(cards) do
     count_faces(cards)
     |> Enum.member?(4)
@@ -116,9 +135,6 @@ defmodule Poker do
 
   # Compare card with next card
   # No tail recursing
-  #
-  # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
-  # Output: true if straight and false othesize
   def straight(cards) do
     match?(
       [_, [1,1,1,1]],
