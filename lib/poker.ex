@@ -44,6 +44,22 @@ defmodule Poker do
     Enum.random([hand1, hand2])
   end
 
+  # pair
+  def pair(cards) do
+    count_faces(cards)
+    |> Map.values
+    |> Enum.filter(&(&1 == 2))
+    |> length == 1
+  end
+
+  # Two pair
+  def two_pair(cards) do
+    count_faces(cards)
+    |> Map.values
+    |> Enum.filter(&(&1 == 2))
+    |> length == 2
+  end
+
   # Three of the same face value
   #
   # Input: [{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}]
@@ -52,6 +68,15 @@ defmodule Poker do
     count_faces(cards)
     |> Map.values
     |> Enum.member?(3)
+  end
+
+  # Full house
+  def full_house(cards) do
+    count_faces(cards)
+    |> Map.values
+    |> fn(values) -> 
+         Enum.member?(values, 3) && Enum.member?(values, 2) 
+       end.()
   end
 
   # Four of the same face value
@@ -72,7 +97,8 @@ defmodule Poker do
   def straight(cards) do
     match?(
       [_, [1,1,1,1]],
-      Enum.sort(cards, fn({ face1,_ },{ face2,_ }) -> face1 < face2 end)|> straight([])
+        Enum.sort(cards, fn({ face1,_ },{ face2,_ }) -> face1 < face2 end)
+        |> straight([])
     )
   end
 
