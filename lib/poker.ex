@@ -47,7 +47,7 @@ defmodule Poker do
     case([rank1 > rank2, rank1 < rank2]) do
       [true, false] -> hand1
       [false, true] -> hand2
-      _             -> nil
+      _             -> false
     end
   end
 
@@ -61,17 +61,17 @@ defmodule Poker do
   #  2 - pair + 2 card value + highest cards
   #  1 - high card + highest cards
   defp rank(cards) do
-    [ 
-      straight_flush(cards),
-      four_of_a_kind(cards),
-      full_house(cards),
-      flush(cards),
-      straight(cards),
-      three_of_a_kind(cards),
-      two_pair(cards),
-      pair(cards),
-      true
-    ]
+    cond do
+      straight_flush(cards)  -> 9
+      four_of_a_kind(cards)  -> 8
+      full_house(cards)      -> 7
+      flush(cards)           -> 6
+      straight(cards)        -> 5
+      three_of_a_kind(cards) -> 4
+      two_pair(cards)        -> 3
+      pair(cards)            -> 2
+      true                   -> 1
+    end
   end
 
   # pair

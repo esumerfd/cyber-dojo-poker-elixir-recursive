@@ -7,7 +7,7 @@ defmodule PokerTest do
 
     assert hand1
     assert hand2
-    assert hand1 == winner || hand2 == winner
+    assert hand1 == winner || hand2 == winner || false == winner
   end
 
   test "winner" do
