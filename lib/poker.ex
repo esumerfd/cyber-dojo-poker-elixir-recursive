@@ -107,6 +107,14 @@ defmodule Poker do
     [4, elem(pair,0)]
   end
 
+  def rank_full_house(cards) do
+    pair = count_cards(cards, &(elem(&1,0) ), %{})
+    |> Enum.filter(fn({_, count}) -> count == 3 end)
+    |> List.first
+
+    [7, elem(pair,0)]
+  end
+
   # pair
   def pair(cards) do
     count_faces(cards)
