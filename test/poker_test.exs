@@ -34,6 +34,10 @@ defmodule PokerTest do
     assert [7,2] == Poker.rank_full_house([{2, :H},{2, :S}, {3, :D}, {3, :H}, {2, :D}])
   end
 
+  test "rank straight" do
+    assert [5,6] == Poker.rank_straight([{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}])
+  end
+
   test "pair" do
     assert Poker.pair([{2, :H},{2, :D}, {5, :C}, {8, :S}, {6, :H}])
     assert Poker.pair([{2, :H},{6, :D}, {5, :C}, {8, :S}, {6, :H}])
@@ -64,18 +68,18 @@ defmodule PokerTest do
     assert !Poker.full_house([{4, :H},{4, :D}, {3, :C}, {2, :S}, {2, :H}])
   end
 
-  test "four of a kind" do
-    assert Poker.four_of_a_kind([{2, :H},{2, :D}, {2, :C}, {2, :S}, {6, :H}])
-
-    assert !Poker.four_of_a_kind([{4, :H},{2, :D}, {2, :C}, {2, :S}, {6, :H}])
-    assert !Poker.four_of_a_kind([{4, :H},{4, :D}, {2, :C}, {2, :S}, {2, :H}])
-  end
-
   test "straight" do
     assert Poker.straight([{2, :H},{3, :D}, {4, :C}, {5, :S}, {6, :H}])
     assert Poker.straight([{4, :H},{3, :D}, {2, :C}, {5, :S}, {6, :H}])
 
     assert !Poker.straight([{3, :D}, {4, :C}, {5, :S}, {6, :H},{9, :H}])
+  end
+
+  test "four of a kind" do
+    assert Poker.four_of_a_kind([{2, :H},{2, :D}, {2, :C}, {2, :S}, {6, :H}])
+
+    assert !Poker.four_of_a_kind([{4, :H},{2, :D}, {2, :C}, {2, :S}, {6, :H}])
+    assert !Poker.four_of_a_kind([{4, :H},{4, :D}, {2, :C}, {2, :S}, {2, :H}])
   end
 
   test "flush" do

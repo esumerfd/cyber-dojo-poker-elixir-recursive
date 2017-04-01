@@ -100,19 +100,27 @@ defmodule Poker do
   end
 
   def rank_three_of_a_kind(cards) do
-    pair = count_cards(cards, &(elem(&1,0) ), %{})
+    high_card = count_cards(cards, &(elem(&1,0) ), %{})
     |> Enum.filter(fn({_, count}) -> count == 3 end)
     |> List.first
 
-    [4, elem(pair,0)]
+    [4, elem(high_card,0)]
+  end
+
+  def rank_straight(cards) do
+    high_card = cards
+    |> Enum.sort(fn({face1,_},{face2,_}) -> face1 > face2 end)
+    |> List.first
+
+    [5, elem(high_card,0)]
   end
 
   def rank_full_house(cards) do
-    pair = count_cards(cards, &(elem(&1,0) ), %{})
+    high_card = count_cards(cards, &(elem(&1,0) ), %{})
     |> Enum.filter(fn({_, count}) -> count == 3 end)
     |> List.first
 
-    [7, elem(pair,0)]
+    [7, elem(high_card,0)]
   end
 
   # pair
